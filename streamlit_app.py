@@ -11,7 +11,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 # ==========================================
 st.set_page_config(
     page_title="FloodVision AI",
-    page_icon="💜",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -143,7 +143,7 @@ header[data-testid="stHeader"] {
 # ==========================================
 st.markdown("""
 <div class="hero">
-    <div class="hero-title">💜 FloodVision AI</div>
+    <div class="hero-title">FloodVision AI</div>
     <div class="hero-subtitle">
         AI-powered Flood Image Segmentation
         <br>
@@ -152,7 +152,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("## 🌧️ วิเคราะห์ภาพน้ำท่วม")
+st.markdown("## วิเคราะห์ภาพน้ำท่วม")
 st.write(
     "อัปโหลดภาพที่ต้องการตรวจสอบ "
     "แล้วกดปุ่มเพื่อให้ AI วิเคราะห์พื้นที่น้ำท่วม"
@@ -304,14 +304,14 @@ def decode_mask(result):
 # 8. UPLOAD IMAGE
 # ==========================================
 uploaded_file = st.file_uploader(
-    "📁 เลือกภาพที่ต้องการวิเคราะห์",
+    "เลือกภาพที่ต้องการวิเคราะห์",
     type=["jpg", "jpeg", "png"],
     help="รองรับภาพ JPG, JPEG และ PNG ขนาดไม่เกิน 8 MB",
 )
 
 if uploaded_file is not None:
 
-    st.markdown("### 🖼️ ภาพที่เลือก")
+    st.markdown("### ภาพที่เลือก")
 
     try:
         preview, prepared_bytes, original_size, processed_size = (
@@ -345,7 +345,7 @@ if uploaded_file is not None:
     # 9. ANALYZE BUTTON
     # ======================================
     if st.button(
-        "✨ วิเคราะห์พื้นที่น้ำท่วม",
+        "วิเคราะห์พื้นที่น้ำท่วม",
         use_container_width=True,
         type="primary",
     ):
@@ -375,7 +375,7 @@ if uploaded_file is not None:
             # 10. SHOW RESULTS
             # ==================================
             st.markdown("---")
-            st.markdown("## 📊 ผลการวิเคราะห์")
+            st.markdown("## ผลการวิเคราะห์")
 
             col1, col2 = st.columns(2)
 
@@ -443,7 +443,7 @@ else:
         padding:24px;
         margin-top:20px;
     ">
-        <h3>✨ วิธีใช้งาน</h3>
+        <h3> วิธีใช้งาน</h3>
         <p>
             1. เลือกภาพที่ต้องการตรวจสอบ
             <br>
