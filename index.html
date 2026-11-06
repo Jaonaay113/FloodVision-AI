@@ -4,37 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FloodVision AI | Flood Segmentation</title>
-<style>
-:root{--bg:#050611;--panel:#0a0d20;--panel2:#0e1230;--purple:#a855f7;--pink:#e879f9;--blue:#647bff;--text:#f5f3ff;--muted:#b7b5d3;--line:#6738a7;--good:#4ade80}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#26104c 0,transparent 35%),radial-gradient(ellipse at 90% 70%,#1c0b3b 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Tahoma,sans-serif;min-height:100vh}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:radial-gradient(#b68aff 1px,transparent 1px);background-size:24px 24px;mask-image:linear-gradient(to bottom,black,transparent 70%)}
-.wrap{width:min(1240px,calc(100% - 32px));margin:auto;position:relative}
-header{display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid #342052;gap:16px}
-.brand{display:flex;align-items:center;gap:12px}.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,#8b5cf6,#d946ef);display:grid;place-items:center;font-size:24px;box-shadow:0 0 30px #9333ea55}
-.brand strong{display:block;font-size:19px;letter-spacing:.2px}.brand small{color:var(--muted)}.status{font-size:12px;border:1px solid #315b4a;color:#86efac;background:#0b241d;padding:8px 12px;border-radius:99px}
-.hero{padding:42px 0 26px;display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:center}
-.eyebrow{color:#d8b4fe;text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:800}.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.02;margin:12px 0;background:linear-gradient(90deg,#fff,#d8b4fe 58%,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{color:var(--muted);line-height:1.75;max-width:690px;margin:14px 0 0}.hero-card{border:1px solid var(--line);border-radius:20px;padding:20px;background:linear-gradient(145deg,#11132b,#080a19);box-shadow:0 0 40px #8b5cf61a}
-.hero-card .big{font-size:30px;font-weight:800;color:#d8b4fe}.hero-card p{font-size:13px;margin:6px 0 0}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0 24px}.stat{padding:15px;border:1px solid #30204d;background:#0a0c1c;border-radius:14px}.stat b{display:block;font-size:18px}.stat span{font-size:12px;color:var(--muted)}
-.layout{display:grid;grid-template-columns:380px 1fr;gap:18px;align-items:start}.panel{background:linear-gradient(160deg,#0d1025ee,#080a18f5);border:1px solid #543080;border-radius:18px;padding:20px;box-shadow:0 12px 40px #0003}.panel h2{font-size:17px;margin:0 0 6px}.sub{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 16px}
-.drop{border:1px dashed #9b5de5;border-radius:15px;padding:26px 16px;text-align:center;background:#17102a66;transition:.2s;cursor:pointer}.drop.drag{background:#2a1644;border-color:#e879f9}.uploadicon{font-size:35px;margin-bottom:8px}.drop b{display:block}.drop p{font-size:12px;color:var(--muted);line-height:1.6}.drop input{display:none}
-.btn{border:0;border-radius:11px;padding:12px 16px;color:white;font-weight:750;cursor:pointer;background:linear-gradient(100deg,#7c3aed,#c026d3);box-shadow:0 5px 18px #9333ea33}.btn:hover{filter:brightness(1.12)}.btn:disabled{opacity:.45;cursor:not-allowed}.btn.secondary{background:#171a32;border:1px solid #49316a;box-shadow:none}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.actions .btn{flex:1}
-.field{margin-top:18px}.field label{display:block;font-size:12px;color:#d8b4fe;margin-bottom:7px}.field input{width:100%;border:1px solid #392653;border-radius:10px;padding:11px;background:#070916;color:white;outline:none}.field input:focus{border-color:#b66aff}
-.note{margin-top:15px;padding:12px;border-radius:10px;background:#11152b;color:#c4c3dc;font-size:12px;line-height:1.6;border:1px solid #25294a}
-.result-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px}.tag{font-size:11px;color:#d8b4fe;background:#271343;border:1px solid #5b2c8e;padding:6px 9px;border-radius:99px}
-.previews{display:grid;grid-template-columns:1fr 1fr;gap:12px}.preview{min-height:240px;border:1px solid #30264a;border-radius:14px;overflow:hidden;background:#070914;position:relative}.preview-title{padding:10px 12px;font-size:12px;font-weight:750;border-bottom:1px solid #27213b;background:#0e1022}.preview-body{height:260px;display:grid;place-items:center;color:#6f7194;text-align:center;padding:14px;font-size:12px}.preview-body img{width:100%;height:100%;object-fit:contain}.preview-body .placeholder{padding:20px;line-height:1.8}.preview-body .placeholder span{font-size:36px;display:block;margin-bottom:10px}
-.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}.legend span{font-size:11px;color:#c6c5df;display:flex;gap:6px;align-items:center}.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.metric{background:#0b0e20;border:1px solid #272746;border-radius:12px;padding:12px}.metric small{color:var(--muted);display:block;font-size:11px}.metric b{display:block;font-size:17px;margin-top:5px}
-.message{margin-top:14px;font-size:12px;color:#d8b4fe;min-height:18px;line-height:1.5}.foot{padding:28px 0 35px;text-align:center;color:#777895;font-size:11px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-card{display:none}.layout{grid-template-columns:1fr}.stats{margin-top:0}}
-@media(max-width:560px){.wrap{width:calc(100% - 20px)}header{padding:16px 0}.brand strong{font-size:16px}.status{font-size:10px}.hero{padding:30px 0 18px}.panel{padding:14px}.previews{grid-template-columns:1fr}.preview-body{height:230px}.stats{gap:7px}.stat{padding:10px}.stat b{font-size:15px}.stat span{font-size:10px}.metrics{gap:6px}.metric{padding:9px}.metric b{font-size:14px}}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="wrap">
 <header>
-  <div class="brand"><div class="logo">⌁</div><div><strong>FloodVision <span style="color:#c084fc">AI</span></strong><small>Flood Area Segmentation System</small></div></div>
+  <div class="brand"><div class="logo">⌁</div><div><strong>FloodVision <span class="brand-accent">AI</span></strong><small>Flood Area Segmentation System</small></div></div>
   <div class="status">● พร้อมใช้งานหน้าเว็บ</div>
 </header>
 <section class="hero">
@@ -56,12 +31,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:24p
   <div class="message" id="message" role="status">เลือกภาพเพื่อเริ่มต้น</div>
 </section>
 <section class="panel">
-  <div class="result-head"><div><h2>ผลการแบ่งส่วนพื้นที่</h2><p class="sub" style="margin:5px 0 0">เปรียบเทียบภาพก่อนและหลังประมวลผล</p></div><span class="tag" id="resultTag">รอภาพ</span></div>
+  <div class="result-head"><div><h2>ผลการแบ่งส่วนพื้นที่</h2><p class="sub result-subtitle">เปรียบเทียบภาพก่อนและหลังประมวลผล</p></div><span class="tag" id="resultTag">รอภาพ</span></div>
   <div class="previews">
     <div class="preview"><div class="preview-title">ภาพต้นฉบับ (Input)</div><div class="preview-body" id="original"><div class="placeholder"><span>▧</span>ภาพที่อัปโหลดจะแสดงตรงนี้</div></div></div>
     <div class="preview"><div class="preview-title">Segmentation Mask (Output)</div><div class="preview-body" id="mask"><div class="placeholder"><span>◈</span>ผลลัพธ์จากโมเดลจะแสดงตรงนี้</div></div></div>
   </div>
-  <div class="legend"><span><i class="dot" style="background:#d946ef"></i>Flooded Area (ขาว)</span><span><i class="dot" style="background:#111827;border:1px solid #777"></i>Non-Flooded Area (ดำ)</span></div>
+  <div class="legend"><span><i class="dot flooded-dot"></i>Flooded Area (ขาว)</span><span><i class="dot non-flooded-dot"></i>Non-Flooded Area (ดำ)</span></div>
   <div class="metrics"><div class="metric"><small>สถานะโมเดล</small><b id="modelStatus">ยังไม่เชื่อมต่อ</b></div><div class="metric"><small>ขนาดภาพ</small><b id="dimensions">—</b></div><div class="metric"><small>เวลาประมวลผล</small><b id="duration">—</b></div></div>
   <div class="message" id="detail">หมายเหตุ: โมเดลใน Notebook ทำนาย 2 คลาส: น้ำท่วม (ขาว) และไม่ท่วม (ดำ) โดยใช้ threshold 0.5</div>
 </section>
